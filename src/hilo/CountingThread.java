@@ -4,8 +4,10 @@ import model.Counting;
 
 public class CountingThread extends Thread{
 	private Counting counting;
-	public CountingThread(Counting co) {
+	private long sleepMillis;
+	public CountingThread(Counting co, long sm) {
 		counting = co;
+		sleepMillis = sm;
 	}
 	
 	@Override
@@ -14,7 +16,7 @@ public class CountingThread extends Thread{
 			while(counting.getCurrentNumber()<counting.getEndNumber()) {
 				counting.count();
 				System.out.println(counting.getCurrentNumber());
-				Thread.sleep(10);
+				Thread.sleep(sleepMillis);
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();

@@ -1,34 +1,45 @@
 package ui;
 
+import java.util.Scanner;
+
 import hilo.CountingThread;
 import model.Counting;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.print("Until what number should I count?: ");
+		int maxNum = Integer.parseInt(sc.nextLine());
+		System.out.print("What will be the duration of each count in millis?: ");
+		long sleepMillis = Long.parseLong(sc.nextLine());
+		System.out.print("How many threads do you want to use to count?: ");
+		int amountThreads = Integer.parseInt(sc.nextLine());
+		
+		sc.close();
+		
+		CountingThread[] threads = new CountingThread[amountThreads];
+		int intervals = maxNum/threads.length;
+		
+		for (int i = 0; i < threads.length; i++) {
+			System.out.println(i*intervals+" "+(i+1)*intervals);
+			Counting c = new Counting(i*intervals, (i+1)*intervals);
+			threads[i] = new CountingThread(c, sleepMillis);
+		}
+		
 		long init = System.currentTimeMillis();
+		for (int i = 0; i < threads.length; i++) {
+			threads[i].start();
+		}
 		
+		for (int i = 0; i < threads.length; i++) {
+			threads[i].join();
+		}
 		
-		Counting c1 = new Counting(0, 20);
-		Counting c2 = new Counting(21, 40);
-		Counting c3 = new Counting(41, 60);
-		Counting c4 = new Counting(61, 80);
-		Counting c5 = new Counting(81, 100);
-		//c.count();
-		
-		CountingThread ct1 = new CountingThread(c1);
-		CountingThread ct2 = new CountingThread(c2);
-		CountingThread ct3 = new CountingThread(c3);
-		CountingThread ct4 = new CountingThread(c4);
-		CountingThread ct5 = new CountingThread(c5);
-		ct1.start();
-		ct2.start();
-		ct3.start();
-		ct4.start();
-		ct5.start();
 		long end = System.currentTimeMillis();
 		
-		System.out.println("Duration: "+(end-init));
+		System.out.println("Duration with "+amountThreads+" threads: "+(end-init));
 	}
 
 }
