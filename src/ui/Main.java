@@ -2,8 +2,8 @@ package ui;
 
 import java.util.Scanner;
 
-import hilo.CountingThread;
 import model.Counting;
+import thread.CountingThread;
 
 public class Main {
 

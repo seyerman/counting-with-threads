@@ -1,4 +1,4 @@
-package hilo;
+package thread;
 
 import model.Counting;
 
