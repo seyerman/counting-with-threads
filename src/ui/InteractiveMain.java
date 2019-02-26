@@ -5,7 +5,7 @@ import java.util.Scanner;
 import model.Counting;
 import thread.CountingThread;
 
-public class Main {
+public class InteractiveMain {
 
 	public static void main(String[] args) throws InterruptedException {
 		Scanner sc = new Scanner(System.in);
